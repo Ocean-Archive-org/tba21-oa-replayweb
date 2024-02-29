@@ -329,9 +329,6 @@ You can select a file to upload from the main page by clicking the 'Choose File.
   render() {
     return html`
       <section class="container">
-        <div class="has-text-centered is-flex">
-          <wr-anim-logo class="logo" size="96px"></wr-anim-logo>
-        </div>
         ${!this.embed
           ? html` <div class="level">
               <p class="level-item">Loading&nbsp;<b>${this.sourceUrl}</b>...</p>
@@ -381,18 +378,6 @@ You can select a file to upload from the main page by clicking the 'Choose File.
       case "errored":
         return html` <div class="has-text-left">
           <div class="error has-text-danger">${this.error}</div>
-          <div>
-            ${this.errorAllowRetry
-              ? html` <a
-                  class="button is-warning"
-                  @click=${() => window.parent.location.reload()}
-                  >Try Again</a
-                >`
-              : ""}
-            ${this.embed
-              ? html``
-              : html` <a href="/" class="button is-warning">Back</a>`}
-          </div>
         </div>`;
 
       case "permission_needed":

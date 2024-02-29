@@ -139,6 +139,7 @@ class ReplayWebApp extends LitElement {
         display: flex;
         min-width: 0px;
         flex-direction: column;
+        background-color: #142636;
       }
       wr-coll {
         height: 100%;
@@ -408,8 +409,7 @@ class ReplayWebApp extends LitElement {
     }
 
     return html`
-      ${!this.embed || this.embed === "full" ? this.renderNavBar() : ""}
-      ${this.sourceUrl ? this.renderColl() : this.renderHomeIndex()}
+      ${this.sourceUrl ? this.renderColl() : this.renderNoArchive()}
       ${this.showAbout ? this.renderAbout() : ""}
       ${this.showFileDropOverlay ? this.renderDropFileOverlay() : ""}
     `;
@@ -766,6 +766,14 @@ class ReplayWebApp extends LitElement {
     return html`
       <div class="drop-file-overlay">Drop to load web archive</div>
     `;
+  }
+
+  renderNoArchive() {
+    return html`
+      <div class="is-flex is-justify-content-center is-flex-direction-column has-text-centered has-text-white" style="height: 100%; background-color: #142636">
+        <div>No source archive specified.</div>
+      </div>
+    `
   }
 }
 

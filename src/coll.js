@@ -555,15 +555,37 @@ class Coll extends LitElement {
       }
 
       .replay-bar {
-        padding: 0.5em 0em 0.5em 0.5em;
+        padding: 0.5em 0.5em calc(0.5em + 5px) 0.5em;
         max-width: none;
-        border-bottom: solid 0.1rem #97989a;
         width: 100%;
-        background-color: white;
+        background-color: #142636;
+        position: relative;
+
+        &::after {
+          content: "";
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          position: absolute;
+          background: linear-gradient(to right, #0076FF 0%, #9013FE 20%, #50E3C2 50%);
+          height: 5px;
+        }
+      }
+
+      .oa-button {
+        padding-top: 5px !important;
+      }
+      .oa-button svg {
+        fill: #0076ff;
+        transition: all 200ms ease;
+      }
+      .oa-button:hover svg {
+        fill: #eeeeee;
       }
 
       input#url {
-        border-radius: 4px;
+        border-radius: 0;
+        margin-right: 0.5em;
       }
 
       .favicon img {
@@ -626,7 +648,7 @@ class Coll extends LitElement {
 
       form {
         width: 100%;
-        margin: 0 0 0 0.5em;
+        margin: 0 0.5em 0 calc(0.5em + 51px);
       }
 
       .gutter.gutter-horizontal {
@@ -642,6 +664,9 @@ class Coll extends LitElement {
       main,
       wr-coll-replay {
         width: 100%;
+      }
+      wr-coll-replay {
+        background-color: white;
       }
 
       .info-bg {
@@ -745,7 +770,7 @@ class Coll extends LitElement {
       return html`
         ${this.renderLocationBar()} ${this.renderVerifyInfo()}
         <div id="tabContents">
-          <div
+          <!-- <div
             id="contents"
             class="is-light ${isSidebar
               ? "sidebar"
@@ -757,7 +782,7 @@ class Coll extends LitElement {
           >
             ${this.renderTabHeader(isSidebar)}
             ${isSidebar || !isReplay ? this.renderCollTabs(isSidebar) : html``}
-          </div>
+          </div> -->
 
           ${isReplay && this.isVisible
             ? html`
@@ -953,111 +978,6 @@ class Coll extends LitElement {
       >
       <nav class="replay-bar" aria-label="replay">
         <div class="field has-addons">
-          <a
-            href="#"
-            role="button"
-            class="button narrow is-borderless is-hidden-touch"
-            id="fullscreen"
-            @click="${this.onFullscreenToggle}"
-            @keyup="${clickOnSpacebarPress}"
-            title="${this.isFullscreen ? "Exit Full Screen" : "Full Screen"}"
-            aria-label="${this.isFullscreen ? "Exit Fullscreen" : "Fullscreen"}"
-          >
-            <span class="icon is-small">
-              <fa-icon
-                size="1.0em"
-                class="has-text-grey"
-                aria-hidden="true"
-                .svg="${this.isFullscreen ? fasUnfullscreen : fasFullscreen}"
-              ></fa-icon>
-            </span>
-          </a>
-          <a
-            href="#"
-            role="button"
-            class="button narrow is-borderless is-hidden-mobile"
-            @click="${this.onGoBack}"
-            @keyup="${clickOnSpacebarPress}"
-            title="Back"
-            aria-label="Back"
-          >
-            <span class="icon is-small">
-              <fa-icon
-                size="1.0em"
-                class="has-text-grey"
-                aria-hidden="true"
-                .svg="${fasLeft}"
-              ></fa-icon>
-            </span>
-          </a>
-          <a
-            href="#"
-            role="button"
-            class="button narrow is-borderless is-hidden-mobile"
-            @click="${this.onGoForward}"
-            @keyup="${clickOnSpacebarPress}"
-            title="Forward"
-            aria-label="Forward"
-          >
-            <span class="icon is-small">
-              <fa-icon
-                size="1.0em"
-                class="has-text-grey"
-                aria-hidden="true"
-                .svg="${fasRight}"
-              ></fa-icon>
-            </span>
-          </a>
-          <a
-            href="#"
-            role="button"
-            class="button narrow is-borderless ${this.isLoading
-              ? "is-loading"
-              : "is-hidden-mobile"}"
-            id="refresh"
-            @click="${this.onRefresh}"
-            @keyup="${clickOnSpacebarPress}"
-            title="Reload"
-            aria-label="Reload"
-          >
-            <span class="icon is-small">
-              ${!this.isLoading
-                ? html`
-                    <fa-icon
-                      size="1.0em"
-                      class="has-text-grey"
-                      aria-hidden="true"
-                      .svg="${fasRefresh}"
-                    ></fa-icon>
-                  `
-                : ""}
-            </span>
-          </a>
-          ${this.browsable
-            ? html` <a
-                href="#"
-                role="button"
-                class="button narrow is-borderless is-hidden-mobile ${!isReplay
-                  ? "grey-disabled"
-                  : ""}"
-                @click="${this.onShowPages}"
-                @keyup="${clickOnSpacebarPress}"
-                ?disabled="${!isReplay}"
-                title="Browse Contents"
-                aria-label="Browse Contents"
-                aria-controls="contents"
-              >
-                <span class="icon is-small">
-                  <fa-icon
-                    size="1.0em"
-                    class="has-text-grey"
-                    aria-hidden="true"
-                    .svg="${farListAlt}"
-                  ></fa-icon>
-                </span>
-              </a>`
-            : ""}
-          ${this.renderExtraToolbar(false)}
           <form @submit="${this.onSubmit}">
             <div
               class="control is-expanded ${showFavIcon ? "has-icons-left" : ""}"
@@ -1084,8 +1004,89 @@ class Coll extends LitElement {
             </div>
           </form>
 
+          <a
+            href="#"
+            role="button"
+            class="button narrow is-borderless is-hidden-touch"
+            id="fullscreen"
+            @click="${this.onFullscreenToggle}"
+            @keyup="${clickOnSpacebarPress}"
+            title="${this.isFullscreen ? "Exit Full Screen" : "Full Screen"}"
+            aria-label="${this.isFullscreen ? "Exit Fullscreen" : "Fullscreen"}"
+          >
+            <span class="icon is-small">
+              <fa-icon
+                size="1.0em"
+                class="has-text-white"
+                aria-hidden="true"
+                .svg="${this.isFullscreen ? fasUnfullscreen : fasFullscreen}"
+              ></fa-icon>
+            </span>
+          </a>
+          <a
+            href="#"
+            role="button"
+            class="button narrow is-borderless is-hidden-mobile"
+            @click="${this.onGoBack}"
+            @keyup="${clickOnSpacebarPress}"
+            title="Back"
+            aria-label="Back"
+          >
+            <span class="icon is-small">
+              <fa-icon
+                size="1.0em"
+                class="has-text-white"
+                aria-hidden="true"
+                .svg="${fasLeft}"
+              ></fa-icon>
+            </span>
+          </a>
+          <a
+            href="#"
+            role="button"
+            class="button narrow is-borderless is-hidden-mobile"
+            @click="${this.onGoForward}"
+            @keyup="${clickOnSpacebarPress}"
+            title="Forward"
+            aria-label="Forward"
+          >
+            <span class="icon is-small">
+              <fa-icon
+                size="1.0em"
+                class="has-text-white"
+                aria-hidden="true"
+                .svg="${fasRight}"
+              ></fa-icon>
+            </span>
+          </a>
+          <a
+            href="#"
+            role="button"
+            class="button narrow is-borderless ${this.isLoading
+              ? "is-loading"
+              : "is-hidden-mobile"}"
+            id="refresh"
+            @click="${this.onRefresh}"
+            @keyup="${clickOnSpacebarPress}"
+            title="Reload"
+            aria-label="Reload"
+          >
+            <span class="icon is-small">
+              ${!this.isLoading
+                ? html`
+                    <fa-icon
+                      size="1.0em"
+                      class="has-text-white"
+                      aria-hidden="true"
+                      .svg="${fasRefresh}"
+                    ></fa-icon>
+                  `
+                : ""}
+            </span>
+          </a>
+
           <div
-            class="dropdown is-right ${this.menuActive ? "is-active" : ""}"
+            class="dropdown is-hidden-desktop is-right ${this.menuActive ? "is-active" : ""}"
             @click="${() => (this.menuActive = false)}"
           >
             <div class="dropdown-trigger">
@@ -1100,7 +1101,7 @@ class Coll extends LitElement {
                 <span class="icon is-small">
                   <fa-icon
                     size="1.0em"
-                    class="has-text-grey"
+                    class="has-text-white"
                     aria-hidden="true"
                     .svg="${fasMenuV}"
                   ></fa-icon>
@@ -1179,90 +1180,12 @@ class Coll extends LitElement {
                   </span>
                   <span>Reload</span>
                 </a>
-                ${this.browsable
-                  ? html` <a
-                      href="#"
-                      role="button"
-                      class="dropdown-item is-hidden-tablet ${!isReplay
-                        ? "grey-disabled"
-                        : ""}"
-                      @click="${this.onShowPages}"
-                      @keyup="${clickOnSpacebarPress}"
-                    >
-                      <span class="icon is-small">
-                        <fa-icon
-                          size="1.0em"
-                          class="has-text-grey"
-                          aria-hidden="true"
-                          .svg="${farListAlt}"
-                        ></fa-icon>
-                      </span>
-                      <span>Browse Contents</span>
-                    </a>`
-                  : ""}
-                ${this.renderExtraToolbar(true)}
-                ${this.clearable
-                  ? html` <hr class="dropdown-divider is-hidden-desktop" />
-                      <a
-                        href="#"
-                        role="button"
-                        class="dropdown-item"
-                        @click="${this.onPurgeCache}"
-                        @keyup="${clickOnSpacebarPress}"
-                      >
-                        <span class="icon is-small">
-                          <fa-icon
-                            size="1.0em"
-                            class="has-text-grey"
-                            aria-hidden="true"
-                            .svg="${fasSync}"
-                          ></fa-icon>
-                        </span>
-                        <span>Purge Cache + Full Reload</span>
-                      </a>`
-                  : html``}
-                ${(!this.editable && this.sourceUrl.startsWith("http://")) ||
-                this.sourceUrl.startsWith("https://")
-                  ? html` <hr class="dropdown-divider" />
-                      <a
-                        href="${this.sourceUrl}"
-                        role="button"
-                        class="dropdown-item"
-                        @keyup="${clickOnSpacebarPress}"
-                      >
-                        <span class="icon is-small">
-                          <fa-icon
-                            size="1.0em"
-                            class="has-text-grey"
-                            aria-hidden="true"
-                            .svg="${fasDownload}"
-                          ></fa-icon>
-                        </span>
-                        <span>Download Archive</span>
-                      </a>`
-                  : html``}
                 ${dateStr
                   ? html` <hr class="dropdown-divider is-hidden-desktop" />
                       <div class="dropdown-item info is-hidden-desktop">
                         <span class="menu-head">Capture Date</span>${dateStr}
                       </div>`
                   : ""}
-                <hr class="dropdown-divider" />
-                <a
-                  href="#"
-                  role="button"
-                  class="dropdown-item"
-                  @click="${this.onAbout}"
-                >
-                  <fa-icon
-                    class="menu-logo"
-                    size="1.0rem"
-                    aria-hidden="true"
-                    .svg=${this.appLogo}
-                  ></fa-icon>
-                  <span>&nbsp;About ${this.appName}</span>
-                  <span class="menu-version">(${this.appVersion})</span>
-                </a>
               </div>
             </div>
           </div>
