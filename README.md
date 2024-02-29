@@ -1,3 +1,5 @@
+This is a fork of [https://github.com/webrecorder/replayweb.page](https://github.com/webrecorder/replayweb.page), customized for usage on [Ocean Archive](https://ocean-archive.org/).
+
 <p align="center"><img src="/assets/logo.svg" width="128" height="128"></p>
  
 # ReplayWeb.page
